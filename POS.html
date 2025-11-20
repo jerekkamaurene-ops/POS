@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>VapeShop POS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Vape smoke overlay -->
+  <div class="smoke">
+    <span class="s1"></span>
+    <span class="s2"></span>
+    <span class="s3"></span>
+    <span class="s4"></span>
+  </div>
+  <div class="logo-container">
+    <!-- VapeShop SVG Logo -->
+    <svg class="vapeshop-logo" viewBox="0 0 64 64" fill="none">
+      <ellipse cx="32" cy="32" rx="30" ry="30" fill="url(#vape-circ)"/>
+      <g>
+        <ellipse cx="32" cy="36" rx="14" ry="7" fill="#fff" fill-opacity="0.08"/>
+        <ellipse cx="32" cy="36" rx="10" ry="4.8" fill="#fff" fill-opacity="0.12"/>
+        <ellipse cx="32" cy="36" rx="6" ry="2.7" fill="#a388e3" fill-opacity="0.35"/>
+      </g>
+      <!-- Vape device -->
+      <rect x="25" y="20" width="14" height="22" rx="3.5" fill="#232946" stroke="#a388e3" stroke-width="2"/>
+      <rect x="29.5" y="10.5" width="5" height="10" rx="2.5" fill="#a388e3" stroke="#724ec2" stroke-width="1.5"/>
+      <ellipse cx="32" cy="10" rx="2.7" ry="1.1" fill="#fff" fill-opacity="0.35"/>
+      <!-- Vapor/smoke -->
+      <path d="M32 10 Q31.5 7, 29 8 Q29.5 11, 32 12 Q33 8, 35.5 10 Q34.5 13, 32 13" stroke="#fff" stroke-width="1.2" fill="none" opacity="0.7"/>
+      <defs>
+        <radialGradient id="vape-circ" cx="0.5" cy="0.4" r="1">
+          <stop offset="0%" stop-color="#a388e3"/>
+          <stop offset="60%" stop-color="#724ec2"/>
+          <stop offset="100%" stop-color="#1a1b2f"/>
+        </radialGradient>
+      </defs>
+    </svg>
+    <div class="logo-text">SweetDrops VapeLounge</div>
+  </div>
+  <!-- LOGIN -->
+  <div class="container" id="login-container">
+    <h2>Login</h2>
+    <div class="form-group">
+      <label for="login-username">Username</label>
+      <input type="text" id="login-username" autocomplete="off" />
+    </div>
+    <div class="form-group">
+      <label for="login-password">Password</label>
+      <input type="password" id="login-password" autocomplete="off" />
+    </div>
+    <div class="form-group">
+      <label for="login-role">Role</label>
+      <select id="login-role">
+        <option value="cashier">Cashier</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+    <button onclick="login()">Login</button>
+    <div class="error" id="login-error"></div>
+  </div>
+  <!-- MAIN APP -->
+  <div class="container hidden" id="main-container">
+    <button class="logout" onclick="logout()">Logout</button>
+    <h2>Offline SYSTEM</h2>
+    <div class="tabs">
+      <button id="pos-tab-btn" class="active" onclick="showTab('pos')">POS</button>
+      <button id="products-tab-btn" onclick="showTab('products')">PRODUCTS</button>
+      <button id="sales-tab-btn" onclick="showTab('sales')">SALES</button>
+    </div>
+    <!-- POS TAB -->
+    <div id="tab-pos">
+      <form id="add-to-cart-form" onsubmit="event.preventDefault(); addProductToCart();">
+        <div class="flex-row">
+          <div>
+            <label for="barcode">Scan/Enter Barcode</label>
+            <input type="text" id="barcode" autocomplete="off" autofocus />
+          </div>
+          <div>
+            <label for="cart-qty">Quantity</label>
+            <input type="number" id="cart-qty" value="1" min="1" />
+          </div>
+          <div>
+            <label for="item-discount">Item Discount (%)</label>
+            <input type="number" id="item-discount" value="0" min="0" max="100" />
+          </div>
+        </div>
+        <button type="submit" style="margin-top:10px;">Add to Cart</button>
+        <div class="error" id="pos-error"></div>
+      </form>
+
+      <table id="cart-table">
+        <thead>
+          <tr>
+            <th>Barcode</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Discount %</th>
+            <th>Subtotal</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="cart-body"></tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4" class="total">Total Discount:</td>
+            <td id="cart-total-discount" class="total">₱0.00</td>
+            <td colspan="2"></td>
+          </tr>
+          <tr>
+            <td colspan="4" class="total">Total:</td>
+            <td colspan="3" id="cart-total" class="total">₱0.00</td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div class="flex-row" style="margin-top:10px;">
+        <div>
+          <label for="cart-discount">Cart Discount (%)</label>
+          <input type="number" id="cart-discount" value="0" min="0" max="100" style="width:80px;" onchange="renderCart();" />
+        </div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div style="margin-top:14px; display:flex; gap:10px; align-items:end;">
+        <div style="flex:1;">
+          <label for="tendered-amount">Amount Tendered (₱)</label>
+          <input type="number" id="tendered-amount" min="0" step="0.01" placeholder="Enter cash amount" />
+        </div>
+        <div style="align-self:flex-end;">
+          <button onclick="checkout()">Checkout</button>
+        </div>
+      </div>
+      <div class="success" id="checkout-success"></div>
+    </div>
+    <!-- PRODUCTS TAB -->
+    <div id="tab-products" class="hidden">
+      <h3>Product Management</h3>
+      <form id="product-form" onsubmit="event.preventDefault(); saveProduct();">
+        <div class="flex-row">
+          <div>
+            <label for="p-barcode">Barcode</label>
+            <input type="text" id="p-barcode" required />
+          </div>
+          <div>
+            <label for="p-name">Name</label>
+            <input type="text" id="p-name" required />
+          </div>
+          <div>
+            <label for="p-price">Price</label>
+            <input type="number" id="p-price" min="0" step="0.01" required />
+          </div>
+          <div>
+            <label for="p-stock">Stock</label>
+            <input type="number" id="p-stock" min="0" required />
+          </div>
+        </div>
+        <button type="submit" id="product-save-btn">Add Product</button>
+        <button type="button" onclick="clearProductForm()">Clear</button>
+        <input type="hidden" id="p-edit-index" />
+        <div class="error" id="prod-error"></div>
+        <div class="success" id="prod-success"></div>
+      </form>
+      <table id="products-table">
+        <thead>
+          <tr>
+            <th>Barcode</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="products-body"></tbody>
+      </table>
+    </div>
+    <!-- SALES TAB -->
+    <div id="tab-sales" class="hidden">
+      <h3>Sales History</h3>
+      <table id="sales-table">
+        <thead>
+          <tr>
+            <th>Date/Time</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Receipt</th>
+          </tr>
+        </thead>
+        <tbody id="sales-body"></tbody>
+      </table>
+      <button onclick="exportSalesCSV()">Export CSV</button>
+      <a id="csv-dl" class="hidden"></a>
+    </div>
+  </div>
+  <!-- RECEIPT MODAL -->
+  <div id="receipt-modal" class="hidden" style="position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.3);z-index:1000;backdrop-filter: blur(2px);">
+    <div class="receipt" id="receipt-content">
+      <!-- Receipt HTML injected here -->
+    </div>
+    <div class="center" style="margin-top:8px;">
+      <button onclick="printReceipt()">Print</button>
+      <button onclick="closeReceipt()">Close</button>
+    </div>
+  </div>
+  <script src="main.js" defer></script>
+</body>
+</html>

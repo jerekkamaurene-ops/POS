@@ -1,0 +1,208 @@
+/* Extracted styles from POS.html */
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: linear-gradient(135deg, #1a1b2f 0%, #232946 70%, #724ec2 100%);
+  position: relative;
+  overflow-x: hidden;
+}
+.smoke {
+  pointer-events: none;
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 0;
+  background: transparent;
+}
+.smoke span {
+  position: absolute;
+  display: block;
+  width: 200px; height: 200px;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.01) 80%);
+  border-radius: 50%;
+  animation: smoke 16s linear infinite alternate;
+}
+.smoke .s1 { top: 10%; left: 15%; animation-delay: 0s; }
+.smoke .s2 { top: 30%; left: 60%; animation-delay: 4s; }
+.smoke .s3 { top: 60%; left: 25%; animation-delay: 8s; }
+.smoke .s4 { top: 75%; left: 70%; animation-delay: 12s; }
+@keyframes smoke {
+  0% { transform: translateY(0) scale(1); opacity: 0.6;}
+  50% { transform: translateY(-30px) scale(1.2); opacity: 0.9;}
+  100% { transform: translateY(-60px) scale(1.05); opacity: 0.6;}
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 8px;
+}
+.vapeshop-logo {
+  width: 90px;
+  height: 90px;
+  display: block;
+  margin: 0 auto 4px auto;
+  filter: drop-shadow(0 2px 10px #724ec266);
+}
+.logo-text {
+  font-family: 'Orbitron', 'Montserrat', Arial, sans-serif;
+  font-size: 2.1em;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #c9b6fa;
+  text-shadow: 0 4px 18px #232946cc, 0 1px 0 #724ec2;
+  margin-bottom: 4px;
+}
+.container {
+  max-width: 730px;
+  margin: 36px auto 24px auto;
+  background: rgba(34, 36, 52, 0.96);
+  padding: 34px 28px 28px 28px;
+  border-radius: 18px;
+  box-shadow: 0 2px 36px #232946b0, 0 0px 0px #fff;
+  position: relative;
+  z-index: 2;
+  color: #e2dfec;
+  border: 2.5px solid #6c50b9;
+  backdrop-filter: blur(2px);
+}
+h2, h3 {
+  text-align: center;
+  letter-spacing: 1px;
+  color: #c9b6fa;
+  font-family: 'Orbitron', 'Montserrat', Arial, sans-serif;
+  text-shadow: 0 4px 15px #724ec288;
+  margin-top: 0;
+}
+.hidden { display: none !important; }
+.form-group { margin-bottom: 18px; }
+label { display: block; margin-bottom: 6px; color: #e2dfec; }
+input[type="text"], input[type="password"], input[type="number"], select {
+  width: 100%; padding: 10px; font-size: 16px; border: 1.5px solid #5f4c7c; border-radius: 5px;
+  background: #23294633; color: #e2dfec;
+  transition: border 0.2s;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+input:focus { border: 1.5px solid #a388e3; outline: none; background: #1a1b2f;}
+button {
+  background: linear-gradient(90deg, #a388e3 0%, #5f4c7c 100%);
+  color: #fff;
+  border: none;
+  padding: 11px 24px;
+  font-weight: 700;
+  border-radius: 6px;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 1em;
+  cursor: pointer;
+  box-shadow: 0 1px 8px #5f4c7c44;
+  transition: background 0.2s, box-shadow 0.2s, filter 0.15s;
+  margin-bottom: 0.5em;
+}
+button:hover { background: #5f4c7c; box-shadow: 0 2px 14px #a388e344; filter: brightness(1.08);}
+.error { color: #ff8f9c; margin-top: 8px; }
+.success { color: #a6ffb9; margin-top: 10px; }
+.logout {
+  float: right;
+  font-size: 14px;
+  background: #302b3a;
+  color: #e2dfec;
+  margin-top: -10px;
+  border-radius: 20px;
+  padding: 8px 18px;
+  box-shadow: 0 0 7px #5f4c7c55;
+  font-weight: 700;
+}
+.logout:hover { background: #a388e3; color: #232946;}
+.tabs {
+  display: flex;
+  margin-bottom: 22px;
+  border-radius: 7px 7px 0 0;
+  overflow: hidden;
+  box-shadow: 0 2px 13px #23294644;
+}
+.tabs button {
+  flex: 1;
+  background: #302b3a;
+  color: #c1b3e3;
+  border-radius: 0;
+  border-bottom: 3px solid #5f4c7c;
+  font-size: 17px;
+  font-weight: 600;
+  transition: background 0.15s, color 0.15s, border-bottom 0.18s;
+  letter-spacing: 2px;
+  padding: 15px 0;
+}
+.tabs button.active {
+  background: #201d2b;
+  color: #fff;
+  border-bottom: 4px solid #a388e3;
+  font-size: 18px;
+  font-weight: 700;
+  filter: brightness(1.08);
+  box-shadow: 0 2px 14px #a388e355;
+}
+.flex-row { display: flex; gap: 10px; }
+.flex-row > * { flex: 1; }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 18px;
+  background: #23294680;
+  color: #e2dfec;
+  border-radius: 9px;
+  overflow: hidden;
+  box-shadow: 0 2px 18px #6c50b930;
+}
+th, td {
+  border: 1px solid #5f4c7c66;
+  padding: 10px 7px;
+  text-align: center;
+  background: #23294670;
+  font-size: 1em;
+}
+th { background: #5f4c7c33; color: #c9b6fa; font-family: 'Orbitron', 'Montserrat', Arial, sans-serif;}
+.total { font-weight: bold; font-size: 1.15em; text-align: right; }
+.actions button {
+  background: #ff4d4d;
+  color: #fff;
+  box-shadow: none;
+}
+.actions button:hover { background: #c93030; }
+.mini-btn {
+  padding: 5px 14px;
+  font-size: 14px;
+  margin: 0 2px;
+  background: #302b3a;
+  color: #a388e3;
+  border: 1.5px solid #5f4c7c44;
+  border-radius: 5px;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 600;
+}
+.mini-btn:hover { background: #a388e3; color: #232946;}
+.receipt {
+  background: #1a1b2f;
+  border: 2px solid #a388e3;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 20px 14px;
+  border-radius: 10px;
+  font-size: 15px;
+  color: #e2dfec;
+  box-shadow: 0 2px 24px #5f4c7c55;
+  font-family: 'Montserrat', Arial, sans-serif;
+  position: relative;
+}
+.receipt h3 { margin-top: 0; color: #a388e3; font-family: 'Orbitron', Arial, sans-serif;}
+.center { text-align: center; }
+.receipt th { background: #232946; color: #a388e3;}
+.receipt td { background: #1a1b2f;}
+@media (max-width: 650px) {
+  .container { padding: 8px; }
+  th, td { font-size: 13px; }
+  .receipt { font-size: 13px; }
+}
+@media (max-width: 420px) {
+  .vapeshop-logo { width: 60px; height: 60px;}
+  .logo-text { font-size: 1.2em;}
+  .container { padding: 3vw;}
+}
