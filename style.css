@@ -206,3 +206,9 @@ th { background: #5f4c7c33; color: #c9b6fa; font-family: 'Orbitron', 'Montserrat
   .logo-text { font-size: 1.2em;}
   .container { padding: 3vw;}
 }
+
+/* Sales filter (admin only) */
+.sales-filter { margin-bottom: 10px; padding: 10px; border-radius: 8px; background: #201d2b; border: 1px solid #5f4c7c44; }
+.sales-filter label { font-weight:700; color:#c9b6fa; margin-bottom:6px; display:block; }
+.sales-filter input[type="date"] { padding:8px; border-radius:6px; border:1px solid #5f4c7c; background:#23294633; color:#e2dfec; }
+.sales-filter button { padding:8px 12px; font-size:14px; }

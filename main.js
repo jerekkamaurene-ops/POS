@@ -71,6 +71,11 @@ function applyRolePermissions(role) {
   } else {
     productsBtn.style.display = '';
   }
+  // Show sales date filter only for admin
+  const salesFilter = document.getElementById('sales-filter');
+  if (salesFilter) {
+    salesFilter.classList.toggle('hidden', role !== 'admin');
+  }
 }
 
 // --- TABS LOGIC ---
@@ -373,17 +378,40 @@ function renderSales() {
   let tbody = document.getElementById('sales-body');
   let sales = getSales();
   tbody.innerHTML = '';
-  sales.forEach((sale, i) => {
-    let itemsStr = sale.items.map(it=>`${it.name} x${it.qty}`).join('<br>');
+  // Read optional filter values (if present)
+  const startVal = document.getElementById('sales-start') ? document.getElementById('sales-start').value : '';
+  const endVal = document.getElementById('sales-end') ? document.getElementById('sales-end').value : '';
+  let filtered = sales.map((s, idx) => ({ sale: s, idx }));
+  if (startVal) {
+    const sd = new Date(startVal + 'T00:00:00');
+    filtered = filtered.filter(o => new Date(o.sale.datetime) >= sd);
+  }
+  if (endVal) {
+    const ed = new Date(endVal + 'T23:59:59');
+    filtered = filtered.filter(o => new Date(o.sale.datetime) <= ed);
+  }
+  filtered.forEach(({ sale, idx }) => {
+    let itemsStr = sale.items.map(it => `${it.name} x${it.qty}`).join('<br>');
     let tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${new Date(sale.datetime).toLocaleString()}</td>
       <td>${itemsStr}</td>
       <td>₱${(+sale.total).toFixed(2)}</td>
-      <td><button onclick="showReceiptByIndex(${i})">View</button></td>
+      <td><button onclick="showReceiptByIndex(${idx})">View</button></td>
     `;
     tbody.appendChild(tr);
   });
+}
+// Filter helpers
+function filterSales() {
+  renderSales();
+}
+function clearSalesFilter() {
+  const s = document.getElementById('sales-start');
+  const e = document.getElementById('sales-end');
+  if (s) s.value = '';
+  if (e) e.value = '';
+  renderSales();
 }
 function showReceiptByIndex(idx) {
   let sales = getSales();

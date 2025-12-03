@@ -181,6 +181,21 @@
     <!-- SALES TAB -->
     <div id="tab-sales" class="hidden">
       <h3>Sales History</h3>
+      <div id="sales-filter" class="sales-filter hidden">
+        <label>Filter by date range (admin only)</label>
+        <div class="flex-row">
+          <div>
+            <input type="date" id="sales-start" />
+          </div>
+          <div>
+            <input type="date" id="sales-end" />
+          </div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button onclick="filterSales()">Filter</button>
+            <button onclick="clearSalesFilter()">Clear</button>
+          </div>
+        </div>
+      </div>
       <table id="sales-table">
         <thead>
           <tr>
